@@ -2,18 +2,20 @@ import React from "react";
 import "./Table.css";
 
 interface TableProps<T> {
+  className?: string;
   columns: { header: string; accessor: keyof T }[];
   data: T[];
   noDataMessage?: string;
 }
 
 export function Table<T>({
+  className,
   columns,
   data,
   noDataMessage = "No data available",
 }: TableProps<T>) {
   return (
-    <div className="table-responsive">
+    <div className={`table-responsive ${className}`}>
       <table className="table">
         <thead>
           <tr>

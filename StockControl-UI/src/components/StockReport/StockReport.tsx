@@ -1,110 +1,81 @@
-import "./StockReport.css";
-import { Product, StockReportItem, StockTransaction } from "../../types/types";
 import { format } from "date-fns";
 import { useState } from "react";
+import { getReport } from "../../services/reportService";
+import { showErrorToast, showSuccessToast } from "../../services/toastService";
+import {
+  GetReportPayload,
+  GetReportResponse,
+  ReportItem,
+} from "../../types/report";
+import Button from "../Button/Button";
 import { Card } from "../Card/Card";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
-import Button from "../Button/Button";
+import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import Table from "../Table/Table";
+import "./StockReport.css";
 
-interface StockReportProps {
-  products: Product[];
-  transactions: StockTransaction[];
-}
-
-const columns: { header: string; accessor: keyof StockReportItem }[] = [
+const columns: { header: string; accessor: keyof ReportItem }[] = [
   { header: "Product Name", accessor: "productName" },
   { header: "Product Code", accessor: "productCode" },
-  { header: "Check-in Quantity", accessor: "checkInQuantity" },
-  { header: "Check-out Quantity", accessor: "checkOutQuantity" },
+  { header: "Check-in", accessor: "checkinQuantity" },
+  { header: "Check-out", accessor: "checkoutQuantity" },
   { header: "Balance", accessor: "balance" },
 ];
 
 function StockReport() {
-  const [products] = useState<Product[]>([
-    { id: "P001", name: "Laptop", code: "LAP001" },
-    { id: "P002", name: "Smartphone", code: "PHN001" },
-    { id: "P003", name: "Headphones", code: "AUD001" },
-    { id: "P004", name: "Monitor", code: "DSP001" },
-    { id: "P005", name: "Keyboard", code: "INP001" },
-  ]);
+  const initialReportParamsState = {
+    reportDate: format(new Date(), "yyyy-MM-dd"),
+    productCode: "",
+  };
 
-  const [transactions, setTransactions] = useState<StockTransaction[]>([
-    {
-      id: "T001",
-      productCode: "LAP001",
-      quantity: 10,
-      type: "Check-in",
-      date: new Date("2024-03-15"),
-    },
-    {
-      id: "T002",
-      productCode: "PHN001",
-      quantity: 20,
-      type: "Check-in",
-      date: new Date("2024-03-16"),
-    },
-    {
-      id: "T003",
-      productCode: "LAP001",
-      quantity: 3,
-      type: "Check-out",
-      date: new Date("2024-03-17"),
-    },
-  ]);
-
-  const [reportDate, setReportDate] = useState<string>(
-    format(new Date(), "yyyy-MM-dd")
+  const [reportParams, setReportParams] = useState<GetReportPayload>(
+    initialReportParamsState
   );
-  const [filterProductCode, setFilterProductCode] = useState<string>("");
-  const [reportItems, setReportItems] = useState<StockReportItem[]>([]);
+
+  const [isGetReportLoading, setIsGetReportLoading] = useState<boolean>(false);
+  const [reportItems, setReportItems] = useState<ReportItem[]>([]);
   const [hasGenerated, setHasGenerated] = useState<boolean>(false);
+
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { id, value } = event.target as HTMLInputElement;
+    console.log(id, value);
+    setReportParams((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  }
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    generateReport();
+    getReportItems();
   };
 
-  const generateReport = () => {
-    if (!reportDate) return;
+  async function getReportItems() {
+    setIsGetReportLoading(true);
+    await getReport(reportParams)
+      .then((response) => {
+        getReportSucceeded(response);
+      })
+      .catch((error) => {
+        getReportFailed(error);
+      })
+      .finally(() => {
+        setIsGetReportLoading(false);
+      });
+  }
 
-    const selectedDate = new Date(reportDate);
-    selectedDate.setHours(23, 59, 59, 999);
-
-    const relevantTransactions = transactions.filter(
-      (transaction) => transaction.date <= selectedDate
-    );
-
-    const filteredProducts = filterProductCode
-      ? products.filter((product) => product.code.includes(filterProductCode))
-      : products;
-
-    const items: StockReportItem[] = filteredProducts.map((product) => {
-      const productTransactions = relevantTransactions.filter(
-        (transaction) => transaction.productCode === product.code
-      );
-
-      const checkInQuantity = productTransactions
-        .filter((t) => t.type === "Check-in")
-        .reduce((sum, t) => sum + t.quantity, 0);
-
-      const checkOutQuantity = productTransactions
-        .filter((t) => t.type === "Check-out")
-        .reduce((sum, t) => sum + t.quantity, 0);
-
-      return {
-        productName: product.name,
-        productCode: product.code,
-        checkInQuantity,
-        checkOutQuantity,
-        balance: checkInQuantity - checkOutQuantity,
-      };
-    });
-
-    setReportItems(items);
+  function getReportSucceeded(response: GetReportResponse) {
+    showSuccessToast("Report generated successfully");
+    setReportItems(response.$values);
     setHasGenerated(true);
-  };
+  }
+
+  function getReportFailed(error: { response?: { data: string } }) {
+    showErrorToast(error.response?.data || "Failed to generate report");
+    setReportItems([]);
+    setHasGenerated(false);
+  }
 
   return (
     <>
@@ -121,10 +92,10 @@ function StockReport() {
               </label>
               <Input
                 type="date"
-                id="transactionDate"
+                id="reportDate"
                 className="form-control"
-                value={reportDate}
-                onChange={(e) => setReportDate(e.target.value)}
+                value={reportParams.reportDate}
+                onChange={handleInputChange}
                 required
               />
             </Form.FormGroup>
@@ -136,16 +107,26 @@ function StockReport() {
                 type="text"
                 id="productCode"
                 className="form-control"
-                value={filterProductCode}
-                onChange={(e) => setFilterProductCode(e.target.value)}
+                value={reportParams.productCode}
+                onChange={handleInputChange}
                 placeholder="Filter by product code"
               />
             </Form.FormGroup>
-            <Button type="submit" className="primary">
-              Generate Report
+            <Button
+              disabled={isGetReportLoading}
+              type="submit"
+              className="primary"
+            >
+              {isGetReportLoading ? <LoadingIcon /> : "Generate Report"}
             </Button>
           </Form>
-          {hasGenerated && <Table columns={columns} data={reportItems} />}
+          {hasGenerated && (
+            <Table
+              className="stock-report-table"
+              columns={columns}
+              data={reportItems}
+            />
+          )}
         </Card.Body>
       </Card>
     </>

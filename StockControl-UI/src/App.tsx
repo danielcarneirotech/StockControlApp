@@ -2,6 +2,7 @@ import StockReport from "./components/StockReport/StockReport";
 import "./App.css";
 import { useState } from "react";
 import { AddTransaction } from "./components/AddTransacation/AddTransaction";
+import { ToastContainer } from "react-toastify";
 
 const TABS = {
   ADD_TRANSACTION: "addTransaction",
@@ -43,6 +44,7 @@ export function App() {
       <footer className="text-center">
         <p>&copy; 2025 Daniel Carneiro. All rights reserved.</p>
       </footer>
+      <ToastContainer />
     </div>
   );
 }

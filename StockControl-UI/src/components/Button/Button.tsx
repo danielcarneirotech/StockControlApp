@@ -3,5 +3,9 @@ import "./Button.css";
 export default function Button(
   props: React.ButtonHTMLAttributes<HTMLButtonElement>
 ) {
-  return <button {...props}>{props.children}</button>;
+  return (
+    <button className={props.disabled ? "disabled" : ""} {...props}>
+      {props.children}
+    </button>
+  );
 }

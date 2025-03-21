@@ -1,32 +1,48 @@
 .table-responsive {
-    max-height: 400px;
-    overflow-y: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-    background-color: transparent;
+  to {
+    opacity: 1;
   }
-  
-  .table th,
-  .table td {
-    padding: 12px;
-    text-align: center;
-    border-top: 1px solid #dee2e6;
-  }
-  
-  .table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .table tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-  }
-  
-  .table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: center;
+  border-top: 1px solid #dee2e6;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.5s ease;
+  border: 1px solid #dee2e6;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
