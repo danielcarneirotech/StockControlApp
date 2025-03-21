@@ -1,0 +1,34 @@
+# Compiled Object files
+**/[Bb]in/
+**/[Oo]bj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio files
+.vs/
+*.csproj.user
+*.pfx
+*.publishsettings
+
+# NuGet files
+packages/
+*.nupkg
+*.snupkg
+
+# Temporary files
+*.tmp
+*.log
+
+# Database files
+*.mdf
+*.ldf
+
+# Test Results
+TestResults/
+
+# Other files
+.DS_Store
