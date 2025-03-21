@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\StockControl.Domain.csproj" />
+    <ProjectReference Include="..\Application\StockControl.Application.csproj" />
+    <ProjectReference Include="..\StockControl.Shared\StockControl.Shared.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

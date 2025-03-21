@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockControl.Domain.Entities;
+﻿using StockControl.Domain.Entities;
 using StockControl.Domain.Interfaces;
 using StockControl.Infrastructure.Data;
 

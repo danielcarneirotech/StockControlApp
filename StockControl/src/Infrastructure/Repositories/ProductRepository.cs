@@ -21,28 +21,9 @@ namespace StockControl.Infrastructure.Repositories
 
         public Product GetByCode(string code)
         {
-
             return _context.Products
                 .Include(p => p.Transactions)
                 .FirstOrDefault(p => p.Code == code);
         }
-
-        public void Add(Product product)
-        {
-            _context.Products.Add(product);
-            _context.SaveChanges();
-        }
-
-        public void Update(Product product)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Product product)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Implement other methods...
     }
 }
