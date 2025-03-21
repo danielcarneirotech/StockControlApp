@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockControl.Shared", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockControl.Api.Tests", "tests\StockControl.Api.Tests\StockControl.Api.Tests.csproj", "{D7529572-4285-422F-8DBD-7FE627BAEC4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockControl.Application.Tests", "tests\StockControl.Application.Tests\StockControl.Application.Tests.csproj", "{C3B2DC3A-C0FC-41DD-83C8-9A1764E1CF80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{D7529572-4285-422F-8DBD-7FE627BAEC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7529572-4285-422F-8DBD-7FE627BAEC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7529572-4285-422F-8DBD-7FE627BAEC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3B2DC3A-C0FC-41DD-83C8-9A1764E1CF80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B2DC3A-C0FC-41DD-83C8-9A1764E1CF80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3B2DC3A-C0FC-41DD-83C8-9A1764E1CF80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3B2DC3A-C0FC-41DD-83C8-9A1764E1CF80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +66,6 @@ Global
 		{8FC05A5D-EE6F-4757-A8AA-864CF721F014} = {74D7390F-C970-4D23-83BE-F81BF2F86EA9}
 		{514381E5-E6ED-458F-A997-77C63B4EE4EF} = {74D7390F-C970-4D23-83BE-F81BF2F86EA9}
 		{D7529572-4285-422F-8DBD-7FE627BAEC4C} = {7FC190BC-9A0C-4D19-B9B6-D84EB4692097}
+		{C3B2DC3A-C0FC-41DD-83C8-9A1764E1CF80} = {7FC190BC-9A0C-4D19-B9B6-D84EB4692097}
 	EndGlobalSection
 EndGlobal
