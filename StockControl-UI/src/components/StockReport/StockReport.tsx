@@ -39,7 +39,6 @@ function StockReport() {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { id, value } = event.target as HTMLInputElement;
-    console.log(id, value);
     setReportParams((prevState) => ({
       ...prevState,
       [id]: value,
@@ -91,6 +90,8 @@ function StockReport() {
                 Transaction Date
               </label>
               <Input
+                max={format(new Date(), "yyyy-MM-dd")}
+                min="2000-01-01"
                 type="date"
                 id="reportDate"
                 className="form-control"

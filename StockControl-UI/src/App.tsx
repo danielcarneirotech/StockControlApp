@@ -3,6 +3,7 @@ import "./App.css";
 import { useState } from "react";
 import { AddTransaction } from "./components/AddTransacation/AddTransaction";
 import { ToastContainer } from "react-toastify";
+import { User } from "react-feather";
 
 const TABS = {
   ADD_TRANSACTION: "addTransaction",
@@ -42,7 +43,8 @@ export function App() {
         )}
       </main>
       <footer className="text-center">
-        <p>&copy; 2025 Daniel Carneiro. All rights reserved.</p>
+        <User />
+        <p>Daniel Carneiro | 2025</p>
       </footer>
       <ToastContainer />
     </div>
