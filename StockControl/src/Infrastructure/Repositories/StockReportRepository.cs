@@ -28,6 +28,7 @@ namespace StockControl.Infrastructure.Repositories
             }
 
             var query = _context.Transactions
+            .Include(t => t.Product)
                 .Where(t => t.CreatedAt.Date <= reportDate.Date);
 
             if (!string.IsNullOrEmpty(productCode))

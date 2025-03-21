@@ -19,11 +19,11 @@ namespace StockControl.Infrastructure.Repositories
             _context = context;
         }
 
-        public Product GetByCode(string code)
+        public async Task<Product> GetByCode(string code)
         {
-            return _context.Products
+            return await _context.Products
                 .Include(p => p.Transactions)
-                .FirstOrDefault(p => p.Code == code);
+                .FirstOrDefaultAsync(p => p.Code == code);
         }
     }
 }

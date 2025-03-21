@@ -9,6 +9,6 @@ namespace StockControl.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        Product GetByCode(string code);
+        Task<Product> GetByCode(string code);
     }
 }

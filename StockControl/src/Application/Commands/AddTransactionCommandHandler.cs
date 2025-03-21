@@ -16,7 +16,7 @@ public class AddTransactionCommandHandler : IRequestHandler<AddTransactionComman
 
     public async Task<Transaction> Handle(AddTransactionCommand request, CancellationToken cancellationToken)
     {
-        var product = _productRepository.GetByCode(request.Transaction.ProductCode);
+        var product = await _productRepository.GetByCode(request.Transaction.ProductCode);
 
         if (product == null)
         {
@@ -37,11 +37,11 @@ public class AddTransactionCommandHandler : IRequestHandler<AddTransactionComman
             CreatedAt = DateTime.UtcNow
         };
 
-        var currentStock = product.Transactions
+        var currentStock = product.Transactions != null ? product.Transactions
             .Where(t => t.Type == TransactionType.Checkin)
             .Sum(t => t.Quantity) - product.Transactions
             .Where(t => t.Type == TransactionType.Checkout)
-            .Sum(t => t.Quantity);
+            .Sum(t => t.Quantity) : 0;
 
         if (transaction.Type == TransactionType.Checkout)
         {
