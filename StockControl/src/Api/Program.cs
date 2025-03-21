@@ -23,6 +23,16 @@ public partial class Program
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
         });
 
+        builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
         // Configure DbContext
         builder.Services.AddDbContext<StockControlDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -50,6 +60,9 @@ public partial class Program
         }
 
         app.UseHttpsRedirection();
+
+        // Add CORS middleware here, before routing and endpoints
+        app.UseCors("AllowReactApp");
 
         app.UseAuthorization();
 
