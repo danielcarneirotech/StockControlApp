@@ -1,0 +1,11 @@
+.form-group {
+    margin-bottom: 20px;
+    display: grid;
+    gap: 7px;
+}
+
+.form-group label {
+    font-size: 17px;
+    color: #333;
+    font-weight: bold;
+}

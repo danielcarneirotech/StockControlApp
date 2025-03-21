@@ -1,0 +1,15 @@
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select:focus {
+    border-color: #888888;
+    outline: none;
+    box-shadow: 0 0 5px rgba(136, 136, 136, 0.5);
+}
