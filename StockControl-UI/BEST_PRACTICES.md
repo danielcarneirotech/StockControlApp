@@ -1,16 +1,46 @@
 # StockControlApp - ReactJS Best Practices
 
-This document outlines the best practices to follow while developing the StockControlApp ReactJS project. Adhering to these guidelines ensures code quality, team productivity, and maintainability.
+This document outlines the best practices to follow while developing the StockControlApp ReactJS project. Adhering to these guidelines ensures code quality, organization, team productivity, and maintainability.
+
+## Contact Information
+
+- **Name**: Daniel Carneiro
+- **Company**: Accruent
+- **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
+
+## Here's a quick overview of the key topics covered in this README:
+
+1.  **Project Structure**
+2.  **Testing**
+3.  **Dependencies**
+4.  **Dependency Management**
+5.  **Code Quality and Architecture**
+6.  **Team Productivity**
+7.  **Environment Variables**
+8.  **API Services**
+9.  **Contact Information**
 
 ## Project Structure
 
-The project follows a component-based architecture with a clear separation of concerns.
+The project follows a component-based architecture with a clear separation of concerns that should be followed by the team. It's not fully implemented, but that's our goal "to be" right now:
 
-- **`src/`**: Main source directory.
-  - **`components/`**: Reusable UI components.
-  - **`pages/`**: Page-level components (views).
-  - **`services/`**: API and utility services.
-  - **`types/`**: TypeScript type definitions.
+**`src/`**: Main Source Directory
+        * **`components/`**: Reusable UI components.
+        * **`pages/`**: Page-level components (views).
+        * **`hooks/`**: Custom React hooks.
+        * **`services/`**: API and utility services.
+        * **`types/`**: TypeScript type definitions.
+        * **`utils/`**: Shared utility functions and helpers.
+        * **`store/`**: Redux state management (slices, actions, selectors, store configuration).
+        * **`assets/`**: Static assets (images, fonts, SVGs, etc.).
+        * **`styles/`**: Global styles, themes, and CSS modules.
+        * **`contexts/`**: React context providers.
+        * **`routes/`**: Routing configuration and components.
+        * **`mocks/`**: Mock data for development and testing.
+        * **`config/`**: Application configuration files and constants.
+        * **`layouts/`**: Layout components (e.g., for headers, footers, sidebars).
+        * **`forms/`**: Reusable form components and logic.
+        * **`i18n/`**: Internationalization files and configuration.
 - **`public/`**: Static assets.
 - **`tests/`**: Test files (e.g., `App.test.tsx`, `api.test.tsx`).
 - **`coverage/`**: Test coverage reports.
@@ -21,7 +51,7 @@ The project follows a component-based architecture with a clear separation of co
 
 ## Testing
 
-- **Coverage Goals:** Aim for 90%+ statement, branch, function, and line coverage for all files.
+- **Coverage Goals:** Must be 90%+ statement, branch, function, and line coverage for all files.
 - **Testing Library:** Use `@testing-library/react` for component testing.
 - **Jest:** Utilize Jest as the test runner.
 - **Mocking:** Use `jest.mock()` for mocking external dependencies and API calls.
@@ -44,7 +74,7 @@ The project follows a component-based architecture with a clear separation of co
 ## Dependency Management
 
 - **Bundle Size:** Carefully consider the impact of new packages on bundle size.
-- **Security:** Ensure that new packages are secure and well-maintained.
+- **Security:** Ensure that new packages are secure and well-maintained. Always use trusted sources and run `npm audit` to check for vulnerabilities.
 - **Alternatives:** Explore built-in browser APIs or lightweight alternatives before adding new dependencies.
 - **Version Control:** Pin dependencies to specific versions to avoid unexpected breaking changes.
 
@@ -52,7 +82,20 @@ The project follows a component-based architecture with a clear separation of co
 
 - **Component Reusability:** Design components to be reusable across the application.
 - **Separation of Concerns:** Keep components focused on specific tasks and avoid mixing logic.
-- **State Management:** Use React's built-in state management (`useState`, `useContext`) for local component state. When our app gets more complex, consider using `Redux Toolkit` for global state management.
+- **State Management:** Use React's built-in state management (`useState`, `useContext`) for local component state. When our app gets more complex, let's use `Redux Toolkit` for global state management to avoid prop drilling. For example:
+    We can organize our Redux state into "slices," each representing a specific feature or domain within the application. Slices are located in the `src/store/slices/` directory. For example:
+        * `src/store/slices/reportSlice.ts`: Manages the state related to stock reports.
+        * `src/store/slices/transactionSlice.ts`: Manages the state related to transactions.
+    Each slice file should export:
+        * A `slice` object created using `createSlice` from Redux Toolkit.
+        * Action creators generated by `createSlice`.
+        * The slice's reducer as the default export.
+        * Selectors to access specific parts of the slice's state.
+
+    ### Async Actions and Thunks
+        For handling asynchronous actions (like API calls), we use Redux Thunks placed within the respective slice files.
+    ### Store Configuration
+        The global Redux store is configured in src/store/store.ts using configureStore from Redux Toolkit. The store combines all slice reducers.
 - **TypeScript:** Leverage TypeScript's type system to improve code reliability and maintainability.
 - **Code Formatting:** Use Prettier to enforce consistent code formatting.
 - **Code Linting:** Use ESLint to enforce code style and catch potential errors.
@@ -85,12 +128,6 @@ The project follows a component-based architecture with a clear separation of co
 - **Error Handling:** Implement error handling for API calls, including retries and fallbacks.
 - **Base URL:** Store the API base URL in an environment variable.
 - **Data Transformation:** Transform API responses into the required data format.
-
-## Date Handling
-
-- **`date-fns`:** Use `date-fns` for all date manipulation tasks.
-- **Localization:** Consider localization for date formatting and parsing.
-- **Time Zones:** Handle time zones correctly to avoid unexpected behavior.
 
 Let's make and keep our application more maintainable, scalable, and reliable.
 

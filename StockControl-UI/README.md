@@ -8,7 +8,6 @@
 
 ## Here's a quick overview of the key topics covered in this README:
 
-- **Contact Information:**
 - **Project Overview:**
 - **Key Features:**
 - **Technologies Used:**
@@ -62,9 +61,31 @@ To get started with the project, follow these steps:
    npm run build
    ```
 
-5. **Preview the build**:
+5. **Run tests**:
+
+   ```sh
+   npm test
+   ```
+
+6. **Run linting**:
+
+   ```sh
+   npm run lint
+   ```
+7. **Run formatting**:
+
+   ```sh
+   npm run format
+   ```
+
+8. **Preview the build**:
    ```sh
    npm run preview
+   ```
+
+9. **Scan for vulnerabilities**:
+   ```sh
+   npm audit
    ```
 
 ## Testing
