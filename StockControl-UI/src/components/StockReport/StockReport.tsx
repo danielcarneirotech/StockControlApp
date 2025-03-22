@@ -1,40 +1,31 @@
-import { format } from "date-fns";
-import { useState } from "react";
-import { getReport } from "../../services/ReportService/reportService";
-import {
-  showErrorToast,
-  showSuccessToast,
-} from "../../services/ToastService/toastService";
-import {
-  GetReportPayload,
-  GetReportResponse,
-  ReportItem,
-} from "../../types/report";
-import Button from "../Button/Button";
-import { Card } from "../Card/Card";
-import { Form } from "../Form/Form";
-import { Input } from "../Input/Input";
-import LoadingIcon from "../LoadingIcon/LoadingIcon";
-import Table from "../Table/Table";
-import "./StockReport.css";
+import { format } from 'date-fns';
+import { useState } from 'react';
+import { getReport } from '../../services/ReportService/reportService';
+import { showErrorToast, showSuccessToast } from '../../services/ToastService/toastService';
+import { GetReportPayload, GetReportResponse, ReportItem } from '../../types/report';
+import Button from '../Button/Button';
+import { Card } from '../Card/Card';
+import { Form } from '../Form/Form';
+import { Input } from '../Input/Input';
+import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import Table from '../Table/Table';
+import './StockReport.css';
 
 const columns: { header: string; accessor: keyof ReportItem }[] = [
-  { header: "Product Name", accessor: "productName" },
-  { header: "Product Code", accessor: "productCode" },
-  { header: "Check-in", accessor: "checkinQuantity" },
-  { header: "Check-out", accessor: "checkoutQuantity" },
-  { header: "Balance", accessor: "balance" },
+  { header: 'Product Name', accessor: 'productName' },
+  { header: 'Product Code', accessor: 'productCode' },
+  { header: 'Check-in', accessor: 'checkinQuantity' },
+  { header: 'Check-out', accessor: 'checkoutQuantity' },
+  { header: 'Balance', accessor: 'balance' },
 ];
 
 function StockReport() {
   const initialReportParamsState = {
-    reportDate: format(new Date(), "yyyy-MM-dd"),
-    productCode: "",
+    reportDate: format(new Date(), 'yyyy-MM-dd'),
+    productCode: '',
   };
 
-  const [reportParams, setReportParams] = useState<GetReportPayload>(
-    initialReportParamsState
-  );
+  const [reportParams, setReportParams] = useState<GetReportPayload>(initialReportParamsState);
 
   const [isGetReportLoading, setIsGetReportLoading] = useState<boolean>(false);
   const [reportItems, setReportItems] = useState<ReportItem[]>([]);
@@ -68,13 +59,13 @@ function StockReport() {
   }
 
   function getReportSucceeded(response: GetReportResponse) {
-    showSuccessToast("Report generated successfully");
+    showSuccessToast('Report generated successfully');
     setReportItems(response.$values);
     setHasGenerated(true);
   }
 
   function getReportFailed(error: { response?: { data: string } }) {
-    showErrorToast(error.response?.data || "Failed to generate report");
+    showErrorToast(error.response?.data || 'Failed to generate report');
     setReportItems([]);
     setHasGenerated(false);
   }
@@ -94,7 +85,7 @@ function StockReport() {
               </label>
               <Input
                 data-testid="transaction-date-input"
-                max={format(new Date(), "yyyy-MM-dd")}
+                max={format(new Date(), 'yyyy-MM-dd')}
                 min="2000-01-01"
                 type="date"
                 id="reportDate"
@@ -124,7 +115,7 @@ function StockReport() {
               type="submit"
               className="primary"
             >
-              {isGetReportLoading ? <LoadingIcon /> : "Generate Report"}
+              {isGetReportLoading ? <LoadingIcon /> : 'Generate Report'}
             </Button>
           </Form>
           {hasGenerated && (

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import "./LoadingIcon.css";
-import { Loader } from "react-feather";
+import './LoadingIcon.css';
+import { Loader } from 'react-feather';
 
 const LoadingIcon: React.FC = () => {
   return (

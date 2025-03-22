@@ -1,8 +1,8 @@
-import { toast, ToastOptions } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const defaultOptions: ToastOptions = {
-  position: "top-right",
+  position: 'top-right',
   autoClose: 3000,
   hideProgressBar: false,
   closeOnClick: true,
@@ -10,7 +10,7 @@ const defaultOptions: ToastOptions = {
   draggable: true,
   progress: undefined,
   style: {
-    color: "#333",
+    color: '#333',
   },
 };
 

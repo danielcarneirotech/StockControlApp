@@ -1,25 +1,19 @@
-import { useState } from "react";
-import { Card } from "../Card/Card";
-import Form from "../Form/Form";
-import { Input } from "../Input/Input";
-import { Select } from "../Select/Select";
+import { useState } from 'react';
+import { Card } from '../Card/Card';
+import Form from '../Form/Form';
+import { Input } from '../Input/Input';
+import { Select } from '../Select/Select';
 
-import { postTransaction } from "../../services/TransactionService/transactionService";
-import {
-  AddTransactionPayload,
-  TransactionType,
-} from "../../types/transaction";
-import Button from "../Button/Button";
+import { postTransaction } from '../../services/TransactionService/transactionService';
+import { AddTransactionPayload, TransactionType } from '../../types/transaction';
+import Button from '../Button/Button';
 
-import LoadingIcon from "../LoadingIcon/LoadingIcon";
-import {
-  showErrorToast,
-  showSuccessToast,
-} from "../../services/ToastService/toastService";
+import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import { showErrorToast, showSuccessToast } from '../../services/ToastService/toastService';
 
 export function AddTransaction() {
   const initialTransactionState = {
-    productCode: "",
+    productCode: '',
     quantity: 0,
     type: TransactionType.CheckIn,
   };
@@ -31,13 +25,13 @@ export function AddTransaction() {
     const { name, value } = e.target;
     setTransaction((prevTransaction) => ({
       ...prevTransaction,
-      [name]: name === "quantity" ? Number(value) : value,
+      [name]: name === 'quantity' ? Number(value) : value,
     }));
   };
 
   const transactionTypes = [
-    { label: "Check In", value: TransactionType.CheckIn.toString() },
-    { label: "Check Out", value: TransactionType.CheckOut.toString() },
+    { label: 'Check In', value: TransactionType.CheckIn.toString() },
+    { label: 'Check Out', value: TransactionType.CheckOut.toString() },
   ];
 
   function handleSelectChange(value: string) {
@@ -73,12 +67,12 @@ export function AddTransaction() {
   }
 
   function addTransactionSucceeded() {
-    showSuccessToast("Transaction added successfully");
+    showSuccessToast('Transaction added successfully');
     resetForm();
   }
 
   function addTransactionFailed(error: { response?: { data: string } }) {
-    showErrorToast(error.response?.data || "Failed to add transaction.");
+    showErrorToast(error.response?.data || 'Failed to add transaction.');
   }
 
   function resetForm() {
@@ -142,7 +136,7 @@ export function AddTransaction() {
               className="primary"
               type="submit"
             >
-              {addTransactionIsLoading ? <LoadingIcon /> : "Add Transaction"}
+              {addTransactionIsLoading ? <LoadingIcon /> : 'Add Transaction'}
             </Button>
           </Form>
         </Card.Body>

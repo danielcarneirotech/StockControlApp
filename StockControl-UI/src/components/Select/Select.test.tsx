@@ -1,15 +1,15 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { Select } from "./Select";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Select } from './Select';
 
-describe("Select Component", () => {
+describe('Select Component', () => {
   const mockOptions = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
   ];
 
   const mockOnChange = jest.fn();
 
-  it("renders correctly with given props", () => {
+  it('renders correctly with given props', () => {
     render(
       <Select
         name="test-select"
@@ -22,14 +22,14 @@ describe("Select Component", () => {
       />
     );
 
-    expect(screen.getByTestId("select")).toBeInTheDocument();
-    expect(screen.getByText("Select an option")).toBeInTheDocument();
+    expect(screen.getByTestId('select')).toBeInTheDocument();
+    expect(screen.getByText('Select an option')).toBeInTheDocument();
     mockOptions.forEach((option) => {
       expect(screen.getByText(option.label)).toBeInTheDocument();
     });
   });
 
-  it("calls onChange when an option is selected", () => {
+  it('calls onChange when an option is selected', () => {
     render(
       <Select
         name="test-select"
@@ -41,11 +41,11 @@ describe("Select Component", () => {
       />
     );
 
-    fireEvent.change(screen.getByTestId("select"), { target: { value: "1" } });
-    expect(mockOnChange).toHaveBeenCalledWith("1");
+    fireEvent.change(screen.getByTestId('select'), { target: { value: '1' } });
+    expect(mockOnChange).toHaveBeenCalledWith('1');
   });
 
-  it("displays the correct value when an option is selected", () => {
+  it('displays the correct value when an option is selected', () => {
     render(
       <Select
         name="test-select"
@@ -57,10 +57,10 @@ describe("Select Component", () => {
       />
     );
 
-    expect(screen.getByTestId("select")).toHaveValue("2");
+    expect(screen.getByTestId('select')).toHaveValue('2');
   });
 
-  it("renders required attribute when required prop is true", () => {
+  it('renders required attribute when required prop is true', () => {
     render(
       <Select
         name="test-select"
@@ -73,6 +73,6 @@ describe("Select Component", () => {
       />
     );
 
-    expect(screen.getByTestId("select")).toBeRequired();
+    expect(screen.getByTestId('select')).toBeRequired();
   });
 });

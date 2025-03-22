@@ -1,12 +1,6 @@
-import "./Card.css";
+import './Card.css';
 
-export function Card({
-  children,
-  dataTestId,
-}: {
-  children: React.ReactNode;
-  dataTestId: string;
-}) {
+export function Card({ children, dataTestId }: { children: React.ReactNode; dataTestId: string }) {
   return (
     <div data-testid={dataTestId} className="card">
       {children}

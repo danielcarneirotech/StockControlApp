@@ -1,4 +1,4 @@
-import "./Select.css";
+import './Select.css';
 
 export function Select({
   name,
@@ -31,11 +31,7 @@ export function Select({
     >
       {placeholder && <option value="">{placeholder}</option>}
       {options.map((option) => (
-        <option
-          data-testid={`option ${option.value}`}
-          key={option.value}
-          value={option.value}
-        >
+        <option data-testid={`option ${option.value}`} key={option.value} value={option.value}>
           {option.label}
         </option>
       ))}

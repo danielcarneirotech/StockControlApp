@@ -1,5 +1,5 @@
-import React from "react";
-import "./Table.css";
+import React from 'react';
+import './Table.css';
 
 interface TableProps<T> {
   className?: string;
@@ -14,13 +14,10 @@ export function Table<T>({
   className,
   columns,
   data,
-  noDataMessage = "No data available",
+  noDataMessage = 'No data available',
 }: TableProps<T>) {
   return (
-    <div
-      data-testid={`table ${dataTestId}`}
-      className={`table-responsive ${className}`}
-    >
+    <div data-testid={`table ${dataTestId}`} className={`table-responsive ${className}`}>
       <table className="table">
         <thead>
           <tr>
@@ -34,9 +31,7 @@ export function Table<T>({
             data.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {columns.map((column, colIndex) => (
-                  <td key={colIndex}>
-                    {row[column.accessor] as unknown as React.ReactNode}
-                  </td>
+                  <td key={colIndex}>{row[column.accessor] as unknown as React.ReactNode}</td>
                 ))}
               </tr>
             ))
