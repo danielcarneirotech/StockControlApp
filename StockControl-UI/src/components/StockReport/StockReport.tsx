@@ -1,7 +1,10 @@
 import { format } from "date-fns";
 import { useState } from "react";
-import { getReport } from "../../services/reportService";
-import { showErrorToast, showSuccessToast } from "../../services/toastService";
+import { getReport } from "../../services/ReportService/reportService";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../services/ToastService/toastService";
 import {
   GetReportPayload,
   GetReportResponse,
@@ -78,7 +81,7 @@ function StockReport() {
 
   return (
     <>
-      <Card>
+      <Card dataTestId="stock-report-card">
         <Card.Header>
           <h1>Stock Report</h1>
           <p>View stock levels for products on a specific date</p>
@@ -90,6 +93,7 @@ function StockReport() {
                 Transaction Date
               </label>
               <Input
+                data-testid="transaction-date-input"
                 max={format(new Date(), "yyyy-MM-dd")}
                 min="2000-01-01"
                 type="date"
@@ -105,6 +109,7 @@ function StockReport() {
                 Product Code (Optional)
               </label>
               <Input
+                data-testid="product-code-input"
                 type="text"
                 id="productCode"
                 className="form-control"
@@ -114,6 +119,7 @@ function StockReport() {
               />
             </Form.FormGroup>
             <Button
+              data-testid="generate-report-button"
               disabled={isGetReportLoading}
               type="submit"
               className="primary"
@@ -123,6 +129,7 @@ function StockReport() {
           </Form>
           {hasGenerated && (
             <Table
+              dataTestId="stock-report-table"
               className="stock-report-table"
               columns={columns}
               data={reportItems}

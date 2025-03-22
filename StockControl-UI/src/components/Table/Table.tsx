@@ -6,16 +6,21 @@ interface TableProps<T> {
   columns: { header: string; accessor: keyof T }[];
   data: T[];
   noDataMessage?: string;
+  dataTestId: string;
 }
 
 export function Table<T>({
+  dataTestId,
   className,
   columns,
   data,
   noDataMessage = "No data available",
 }: TableProps<T>) {
   return (
-    <div className={`table-responsive ${className}`}>
+    <div
+      data-testid={`table ${dataTestId}`}
+      className={`table-responsive ${className}`}
+    >
       <table className="table">
         <thead>
           <tr>

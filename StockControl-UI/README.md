@@ -6,6 +6,15 @@
 - **Company**: Accruent
 - **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
 
+## Here's a quick overview of the key topics covered in this README:
+
+* **Contact Information:**
+* **Project Overview:**
+* **Key Features:**
+* **Technologies Used:**
+* **Getting Started:**
+* **Testing:**
+
 ## Overview
 
 Fitshop Stock System is a web application designed to manage stock transactions and generate stock reports for fitness products. This project is built using React, TypeScript, and Vite, providing a modern and efficient development environment.
@@ -57,3 +66,32 @@ To get started with the project, follow these steps:
    ```sh
    npm run preview
    ```
+## Testing
+
+This project utilizes Jest and React Testing Library for comprehensive testing. Here's a quick overview of our testing strategy:
+
+### Test Suites
+
+* **Unit Tests:** We employ unit tests to isolate and verify the functionality of individual components, services, and utility functions.
+* **Component Tests:** React components are tested using React Testing Library to ensure they render correctly and respond to user interactions as expected.
+* **Service Tests:** Service modules, particularly those interacting with APIs, are thoroughly tested to validate data handling, error management, and API request correctness.
+* **Utility Tests:** Utility functions are tested to confirm their expected behavior across various inputs, including edge cases.
+
+### Running Tests
+
+To execute the test suite, use the following command:
+
+```bash
+npm test
+# or
+yarn test
+```
+
+## Next Steps & Improvements
+
+* **State Management:** Implement Redux Toolkit or Zustand for centralized state, improving maintainability.
+* **Component Library/Design System (Storybook):** Build a reusable UI component library for consistent UI and faster development.
+* **E2E Testing (Cypress/Playwright):** Add end-to-end tests for user flow validation and integration testing.
+* **Performance Optimization:** Implement code splitting, lazy loading, and memoization to improve app performance.
+* **CI/CD Enhancements:** Automate linting, testing, and deployment for faster, reliable releases.
+* **Accessibility (a11y):** Improve accessibility with semantic HTML, ARIA attributes, and screen reader testing.

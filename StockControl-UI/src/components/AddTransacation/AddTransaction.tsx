@@ -4,7 +4,7 @@ import Form from "../Form/Form";
 import { Input } from "../Input/Input";
 import { Select } from "../Select/Select";
 
-import { postTransaction } from "../../services/transactionService";
+import { postTransaction } from "../../services/TransactionService/transactionService";
 import {
   AddTransactionPayload,
   TransactionType,
@@ -12,7 +12,10 @@ import {
 import Button from "../Button/Button";
 
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
-import { showErrorToast, showSuccessToast } from "../../services/toastService";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../services/ToastService/toastService";
 
 export function AddTransaction() {
   const initialTransactionState = {
@@ -84,7 +87,7 @@ export function AddTransaction() {
 
   return (
     <>
-      <Card>
+      <Card dataTestId="add-transaction-card-container">
         <Card.Header>
           <h1>Add Transaction</h1>
           <p>View stock levels for products on a specific date</p>
@@ -94,6 +97,7 @@ export function AddTransaction() {
             <Form.FormGroup>
               <label htmlFor="productCode">Product Code:</label>
               <Input
+                data-testid="product-code-input"
                 name="productCode"
                 value={transaction.productCode}
                 onChange={handleInputChange}
@@ -107,6 +111,7 @@ export function AddTransaction() {
             <Form.FormGroup>
               <label htmlFor="quantity">Quantity:</label>
               <Input
+                data-testid="quantity-input"
                 min={1}
                 max={200000}
                 name="quantity"
@@ -122,6 +127,9 @@ export function AddTransaction() {
             <Form.FormGroup>
               <label htmlFor="transactionType">Transaction Type:</label>
               <Select
+                id="transactionType"
+                name="transactionType"
+                dataTestId="transaction-type-select"
                 options={transactionTypes}
                 value={transaction.type.toString()}
                 onChange={handleSelectChange}
@@ -129,6 +137,7 @@ export function AddTransaction() {
               ></Select>
             </Form.FormGroup>
             <Button
+              data-testid="add-transaction-button"
               disabled={addTransactionIsLoading}
               className="primary"
               type="submit"
