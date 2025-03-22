@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StockControl.Api.Models;
 using StockControl.Application.Commands;
 using StockControl.Application.DTOs;
 using StockControl.Domain.Entities;
@@ -24,24 +20,28 @@ namespace StockControl.Application.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Transaction>> Add(TransactionDTO transaction)
+        public async Task<ActionResult<ApiResponse<Transaction>>> Add(TransactionDTO transaction)
         {
             try
             {
                 var command = new AddTransactionCommand { Transaction = transaction };
                 var result = await _mediator.Send(command);
-                return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+                return CreatedAtAction(nameof(Add), new ApiResponse<Transaction>
+                {
+                    Success = true,
+                    Data = result,
+                    StatusCode = StatusCodes.Status201Created
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ApiResponse<Transaction>
+                {
+                    Success = false,
+                    Errors = new List<string> { ex.Message },
+                    StatusCode = StatusCodes.Status400BadRequest
+                });
             }
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Transaction>> GetById(int id)
-        {
-            return NotFound();
         }
     }
 }

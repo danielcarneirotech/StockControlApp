@@ -1,6 +1,7 @@
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StockControl.Api.Models;
 using StockControl.Shared.DTOs;
 
 namespace StockControl.Api.Controllers
@@ -17,11 +18,30 @@ namespace StockControl.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<StockReportDTO>>> Get([FromQuery] DateTime reportDate, [FromQuery] string? productCode)
+        public async Task<ActionResult<ApiResponse<List<StockReportDTO>>>> Get([FromQuery] DateTime reportDate, [FromQuery] string? productCode)
         {
-            var query = new GetStockReportQuery { ReportDate = reportDate, ProductCode = productCode };
-            var report = await _mediator.Send(query);
-            return Ok(report);
+            try
+            {
+                var query = new GetStockReportQuery { ReportDate = reportDate, ProductCode = productCode ?? string.Empty };
+                var result = await _mediator.Send(query);
+
+                return Ok(new ApiResponse<List<StockReportDTO>>
+                {
+                    Success = true,
+                    Data = result,
+                    StatusCode = StatusCodes.Status200OK
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<List<StockReportDTO>>
+                {
+                    Success = false,
+                    Errors = new List<string> { ex.Message },
+                    StatusCode = StatusCodes.Status500InternalServerError
+                });
+            }
+
         }
     }
 }
