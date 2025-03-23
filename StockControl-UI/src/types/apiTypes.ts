@@ -1,7 +1,7 @@
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
-  Errors: ApiError[];
+  errors: ApiError[];
   statusCode: number;
 }
 

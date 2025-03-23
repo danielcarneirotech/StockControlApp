@@ -67,7 +67,7 @@ describe('AddTransaction', () => {
     (postTransaction as jest.Mock).mockRejectedValue({
       response: {
         data: {
-          errors: [{ message: 'Error adding transaction' }],
+          errors: [{ message: 'Failed to add transaction' }],
         },
       },
     });
@@ -90,7 +90,7 @@ describe('AddTransaction', () => {
         quantity: 10,
         type: 1,
       });
-      expect(showErrorToast).toHaveBeenCalledWith('Error adding transaction');
+      expect(showErrorToast).toHaveBeenCalledWith('Failed to add transaction');
     });
   });
 });

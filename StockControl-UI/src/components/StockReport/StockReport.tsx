@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { getReport } from '../../services/ReportService/reportService';
-import { showErrorToast, showSuccessToast } from '../../services/ToastService/toastService';
+import { showSuccessToast } from '../../services/ToastService/toastService';
+import { ApiResponse } from '../../types/apiTypes';
 import { GetReportPayload, GetReportResponse, ReportItem } from '../../types/report';
+import { handleError } from '../../utils/utils';
 import Button from '../Button/Button';
 import { Card } from '../Card/Card';
 import { Form } from '../Form/Form';
@@ -10,7 +12,6 @@ import { Input } from '../Input/Input';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
 import Table from '../Table/Table';
 import './StockReport.css';
-import { ApiError, ApiResponse } from '../../types/apiTypes';
 
 const columns: { header: string; accessor: keyof ReportItem }[] = [
   { header: 'Product Name', accessor: 'productName' },
@@ -62,7 +63,7 @@ function StockReport() {
         getReportSucceeded(response);
       })
       .catch((error) => {
-        getReportFailed(error.response.data.errors[0]);
+        getReportFailed(error);
       })
       .finally(() => {
         setIsGetReportLoading(false);
@@ -75,8 +76,8 @@ function StockReport() {
     setHasGenerated(true);
   }
 
-  function getReportFailed(error: ApiError) {
-    showErrorToast(error.message || 'Failed to generate report');
+  function getReportFailed(error: unknown) {
+    handleError(error, 'Failed to generate report');
     setReportItems([]);
     setHasGenerated(false);
   }

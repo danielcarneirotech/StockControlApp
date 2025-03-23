@@ -8,14 +8,14 @@ import { postTransaction } from '../../services/TransactionService/transactionSe
 import { AddTransactionPayload, TransactionType } from '../../types/transaction';
 import Button from '../Button/Button';
 
+import { showSuccessToast } from '../../services/ToastService/toastService';
+import { handleError } from '../../utils/utils';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
-import { showErrorToast, showSuccessToast } from '../../services/ToastService/toastService';
-import { ApiError } from '../../types/apiTypes';
 
 export function AddTransaction() {
   const initialTransactionState = {
     productCode: '',
-    quantity: 0,
+    quantity: 1,
     type: TransactionType.CheckIn,
   };
   const [transaction, setTransaction] = useState(initialTransactionState);
@@ -60,7 +60,7 @@ export function AddTransaction() {
         addTransactionSucceeded();
       })
       .catch((error) => {
-        addTransactionFailed(error.response.data.errors[0]);
+        addTransactionFailed(error);
       })
       .finally(() => {
         setAddTransactionIsLoading(false);
@@ -72,8 +72,8 @@ export function AddTransaction() {
     resetForm();
   }
 
-  function addTransactionFailed(error: ApiError) {
-    showErrorToast(error.message || 'Failed to add transaction.');
+  function addTransactionFailed(error: unknown) {
+    handleError(error, 'Failed to add transaction');
   }
 
   function resetForm() {
