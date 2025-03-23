@@ -3,6 +3,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using StockControl.Api.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StockControl.Api.Middleware;
 
@@ -28,20 +29,38 @@ public class ApiResponseMiddleware
             responseBody.Seek(0, SeekOrigin.Begin);
             var responseBodyText = await new StreamReader(responseBody).ReadToEndAsync();
 
-            var result = JsonSerializer.Deserialize<object>(responseBodyText);
-
-            var apiResponse = new ApiResponse<object>
+            if (context.Response.StatusCode >= (int)HttpStatusCode.BadRequest)
             {
-                success = true,
-                data = result,
-                statusCode = context.Response.StatusCode
-            };
+                var validationDetails = JsonSerializer.Deserialize<ValidationProblemDetails>(responseBodyText);
+                var apiResponse = new ApiResponse<object>
+                {
+                    success = false,
+                    errors = ConvertValidationErrors(validationDetails?.Errors),
+                    statusCode = context.Response.StatusCode
+                };
+                var json = JsonSerializer.Serialize(apiResponse);
+                context.Response.Body = originalBodyStream;
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(json);
+            }
+            else
+            {
+                var result = JsonSerializer.Deserialize<object>(responseBodyText);
 
-            var json = JsonSerializer.Serialize(apiResponse);
+                var apiResponse = new ApiResponse<object>
+                {
+                    success = true,
+                    data = result,
+                    statusCode = context.Response.StatusCode
+                };
+
+                var json = JsonSerializer.Serialize(apiResponse);
 
             context.Response.Body = originalBodyStream;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(json);
+            }
+
         }
         catch (Exception ex)
         {
@@ -77,5 +96,23 @@ public class ApiResponseMiddleware
             return argumentException.ParamName ?? string.Empty;
         }
         return null;
+    }
+
+    private List<ApiError> ConvertValidationErrors(IDictionary<string, string[]> validationErrors)
+    {
+        if (validationErrors == null)
+        {
+            return null;
+        }
+
+        var errors = new List<ApiError>();
+        foreach (var error in validationErrors)
+        {
+            foreach (var message in error.Value)
+            {
+                errors.Add(new ApiError { field = error.Key, message = message });
+            }
+        }
+        return errors;
     }
 }
