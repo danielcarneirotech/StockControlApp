@@ -1,4 +1,7 @@
-# Fitshop Stock System
+# Fitshop Stock Control UI
+
+Hi there! 👋
+Welcome to our project!
 
 ## Contact Information
 
@@ -7,15 +10,15 @@
 - **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
 - **LinkedIn**: [Daniel Carneiro](https://www.linkedin.com/in/danielcarneirotech/)
 
-## Here's a quick overview of the key topics covered in this README:
+## Key Topics
 
-- **Project Overview:**
-- **Key Features:**
-- **Technologies Used:**
-- **Getting Started:**
-- **Testing:**
-- **Next Steps & Technical Improvements:**
-- **AI Disclaimer:**
+- **[Project Overview](#overview)**
+- **[Key Features](#key-features)**
+- **[Technologies Used](#technologies-used)**
+- **[Getting Started](#getting-started)**
+- **[Testing](#testing)**
+- **[Next Steps & Technical Improvements](#next-steps--technical-improvements)**
+- **[AI Disclaimer](#ai-disclaimer)**
 
 ## Overview
 

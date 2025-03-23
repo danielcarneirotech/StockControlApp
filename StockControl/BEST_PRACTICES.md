@@ -1,32 +1,16 @@
-# StockControlApp - Backend Best Practices
+# Fitshop Stock Control API Best Practices
 
 This document outlines the best practices to be followed during the development of the StockControlApp backend project. Adhering to these guidelines ensures code quality, maintainability, performance, and team collaboration.
 
-## Contact Information
-
-- **Name**: Daniel Carneiro
-- **Company**: Accruent
-- **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
-
-  ## Table of Contents
-
-- [Project Structure & Layer Responsibilities](#project-structure--layer-responsibilities)
-  - [src/](#src)
-    - [Api/]
-    - [Application/]
-    - [Domain/]
-    - [Infrastructure/]
-    - [StockControl.Shared/]
-  - [tests/](#tests)
-    - [StockControl.Api.Tests/]
-    - [StockControl.Application.Tests/]
-- [Testing](#testing)
-- [Dependencies & Dependency Management](#dependencies--dependency-management)
-- [Code Quality & Architecture](#code-quality--architecture)
-- [Team Productivity & Collaboration](#team-productivity--collaboration)
-- [Environment Variables & Configuration](#environment-variables--configuration)
-- [Timezone Handling](#timezone-handling)
-- [API Documentation](#api-documentation)
+## Key Topics
+- [**Project Structure & Layer Responsibilities**](#project-structure--layer-responsibilities)
+- [**Testing**](#testing)
+- [**Dependency Management**](#dependency-management)
+- [**Code Quality & Architecture**](#code-quality--architecture)
+- [**Team Productivity & Collaboration**](#team-productivity--collaboration)
+- [**Environment Variables & Configuration**](#environment-variables--configuration)
+- [**Timezone Handling**](#timezone-handling)
+- [**API Documentation**](#api-documentation)
 
 ## Project Structure & Layer Responsibilities
 
@@ -82,7 +66,7 @@ The project follows a Clean Architecture with Domain-Driven Design (DDD) princip
 - **Integration Tests**: Test the interaction between different layers (e.g., Application and Infrastructure).
 - **End-to-End Tests**: Verify the complete application flow.
 
-## Dependencies & Dependency Management
+## Dependency Management
 
 - **.NET 9**: Utilize the latest .NET features and performance improvements.
 - **ASP.NET Core Web API**: Build a robust RESTful API.

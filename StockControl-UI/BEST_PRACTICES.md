@@ -1,24 +1,18 @@
-# StockControlApp - ReactJS Best Practices
+# Fitshop Stock Control UI Best Practices
 
 This document outlines the best practices to follow while developing the StockControlApp ReactJS project. Adhering to these guidelines ensures code quality, organization, team productivity, and maintainability.
 
-## Contact Information
+## Key Topics
 
-- **Name**: Daniel Carneiro
-- **Company**: Accruent
-- **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
-
-## Here's a quick overview of the key topics covered in this README:
-
-1.  **Project Structure**
-2.  **Testing**
-3.  **Dependencies**
-4.  **Dependency Management**
-5.  **Code Quality and Architecture**
-6.  **Team Productivity**
-7.  **Environment Variables**
-8.  **API Services**
-9.  **Contact Information**
+- [**Project Structure**](#project-structure)
+- [**Testing**](#testing)
+- [**Dependencies**](#dependencies)
+- [**Dependency Management**](#dependency-management)
+- [**Code Quality and Architecture**](#code-quality-and-architecture)
+- [**Team Productivity**](#team-productivity)
+- [**Environment Variables**](#environment-variables)
+- [**API Services**](#api-services)
+- [**Contact Information**](#contact-information)
 
 ## Project Structure
 
