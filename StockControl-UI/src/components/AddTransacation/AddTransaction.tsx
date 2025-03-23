@@ -10,6 +10,7 @@ import Button from '../Button/Button';
 
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
 import { showErrorToast, showSuccessToast } from '../../services/ToastService/toastService';
+import { ApiError } from '../../types/apiTypes';
 
 export function AddTransaction() {
   const initialTransactionState = {
@@ -59,7 +60,7 @@ export function AddTransaction() {
         addTransactionSucceeded();
       })
       .catch((error) => {
-        addTransactionFailed(error);
+        addTransactionFailed(error.response.data.errors[0]);
       })
       .finally(() => {
         setAddTransactionIsLoading(false);
@@ -71,8 +72,8 @@ export function AddTransaction() {
     resetForm();
   }
 
-  function addTransactionFailed(error: { response?: { data: string } }) {
-    showErrorToast(error.response?.data || 'Failed to add transaction.');
+  function addTransactionFailed(error: ApiError) {
+    showErrorToast(error.message || 'Failed to add transaction.');
   }
 
   function resetForm() {

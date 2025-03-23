@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const defaultOptions: ToastOptions = {
   position: 'top-right',
-  autoClose: 3000,
+  autoClose: 4000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
@@ -11,6 +11,7 @@ const defaultOptions: ToastOptions = {
   progress: undefined,
   style: {
     color: '#333',
+    fontWeight: 'bold',
   },
 };
 

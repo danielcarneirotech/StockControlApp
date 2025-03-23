@@ -10,6 +10,7 @@ import { Input } from '../Input/Input';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
 import Table from '../Table/Table';
 import './StockReport.css';
+import { ApiError, ApiResponse } from '../../types/apiTypes';
 
 const columns: { header: string; accessor: keyof ReportItem }[] = [
   { header: 'Product Name', accessor: 'productName' },
@@ -33,39 +34,49 @@ function StockReport() {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { id, value } = event.target as HTMLInputElement;
-    setReportParams((prevState) => ({
-      ...prevState,
+    setReportParams((prevParams) => ({
+      ...prevParams,
       [id]: value,
     }));
+
+    if (hasGenerated) {
+      setHasGenerated(false);
+    }
   }
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    getReportItems();
+    const date = new Date(reportParams.reportDate);
+    const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    const reportPayload = {
+      ...reportParams,
+      reportDate: format(utcDate, 'yyyy-MM-dd'),
+    };
+    getReportItems(reportPayload);
   };
 
-  async function getReportItems() {
+  async function getReportItems(reportPayload: GetReportPayload) {
     setIsGetReportLoading(true);
-    await getReport(reportParams)
+    await getReport(reportPayload)
       .then((response) => {
         getReportSucceeded(response);
       })
       .catch((error) => {
-        getReportFailed(error);
+        getReportFailed(error.response.data.errors[0]);
       })
       .finally(() => {
         setIsGetReportLoading(false);
       });
   }
 
-  function getReportSucceeded(response: GetReportResponse) {
+  function getReportSucceeded(response: ApiResponse<GetReportResponse>) {
     showSuccessToast('Report generated successfully');
-    setReportItems(response.$values);
+    setReportItems(response.data.$values);
     setHasGenerated(true);
   }
 
-  function getReportFailed(error: { response?: { data: string } }) {
-    showErrorToast(error.response?.data || 'Failed to generate report');
+  function getReportFailed(error: ApiError) {
+    showErrorToast(error.message || 'Failed to generate report');
     setReportItems([]);
     setHasGenerated(false);
   }

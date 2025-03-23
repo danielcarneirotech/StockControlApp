@@ -65,7 +65,11 @@ describe('AddTransaction', () => {
 
   it('handles form submission failure', async () => {
     (postTransaction as jest.Mock).mockRejectedValue({
-      response: { data: 'Error adding transaction' },
+      response: {
+        data: {
+          errors: [{ message: 'Error adding transaction' }],
+        },
+      },
     });
     render(<AddTransaction />);
 

@@ -2,6 +2,7 @@ import { User } from 'react-feather';
 import { AddTransaction } from '../../components/AddTransacation/AddTransaction';
 import StockReport from '../../components/StockReport/StockReport';
 import { useState } from 'react';
+import './Home.css';
 
 const TABS = {
   ADD_TRANSACTION: 'addTransaction',
