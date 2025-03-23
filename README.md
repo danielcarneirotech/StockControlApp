@@ -1,4 +1,4 @@
-# StockControlApp
+# Fitshop Stock Control App
 
 Hi there! 👋
 Welcome to the StockControlApp repository. This project consists of two main components developed by me, Daniel:
