@@ -32,9 +32,9 @@ public class ApiResponseMiddleware
 
             var apiResponse = new ApiResponse<object>
             {
-                Success = true,
-                Data = result,
-                StatusCode = context.Response.StatusCode
+                success = true,
+                data = result,
+                statusCode = context.Response.StatusCode
             };
 
             var json = JsonSerializer.Serialize(apiResponse);
@@ -51,17 +51,17 @@ public class ApiResponseMiddleware
 
             var apiResponse = new ApiResponse<object>
             {
-                Success = false,
-                Errors = new List<ApiError>
+                success = false,
+                errors = new List<ApiError>
                 {
                     new ApiError
                     {
-                        Code = ex.GetType().Name,
-                        Message = ex.Message.Contains("(Parameter '") ? ex.Message.Substring(0, ex.Message.IndexOf(" (Parameter '")) : ex.Message,
-                        Field = GetFieldFromException(ex) ?? string.Empty,
+                        code = ex.GetType().Name,
+                        message = ex.Message.Contains("(Parameter '") ? ex.Message.Substring(0, ex.Message.IndexOf(" (Parameter '")) : ex.Message,
+                        field = GetFieldFromException(ex) ?? string.Empty,
                     }
                 },
-                StatusCode = (int)HttpStatusCode.InternalServerError
+                statusCode = (int)HttpStatusCode.InternalServerError
             };
 
             var json = JsonSerializer.Serialize(apiResponse);

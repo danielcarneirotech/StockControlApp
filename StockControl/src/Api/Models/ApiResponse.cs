@@ -2,15 +2,15 @@ namespace StockControl.Api.Models;
 
 public class ApiError
 {
-    public string Code { get; set; }
-    public string Message { get; set; }
-    public string Field { get; set; } // Optional: Field associated with the error
+    public string code { get; set; }
+    public string message { get; set; }
+    public string field { get; set; }
 }
 
 public class ApiResponse<T>
 {
-    public bool Success { get; set; }
-    public T Data { get; set; }
-    public List<ApiError> Errors { get; set; } = new List<ApiError>();
-    public int StatusCode { get; set; }
+    public bool success { get; set; }
+    public T data { get; set; }
+    public List<ApiError> errors { get; set; } = new List<ApiError>();
+    public int statusCode { get; set; }
 }

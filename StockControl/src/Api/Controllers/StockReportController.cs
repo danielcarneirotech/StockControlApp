@@ -20,7 +20,8 @@ namespace StockControl.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<StockReportDTO>>> Get([FromQuery] DateTime reportDate, [FromQuery] string? productCode)
         {
-            var query = new GetStockReportQuery { ReportDate = reportDate, ProductCode = productCode ?? string.Empty };
+            var utcDateTime = DateTime.SpecifyKind(reportDate, DateTimeKind.Utc);
+            var query = new GetStockReportQuery { ReportDate = utcDateTime, ProductCode = productCode ?? string.Empty };
             var result = await _mediator.Send(query);
             return Ok(result);
         }
