@@ -2,13 +2,7 @@
 
 Hi there! 👋
 Welcome to our project!
-
-## Contact Information
-
-- **Name**: Daniel Carneiro
-- **Company**: Accruent
-- **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
-- **LinkedIn**: [Daniel Carneiro](https://www.linkedin.com/in/danielcarneirotech/)
+This is our README.md file with general information about the project. If you want to go deeper about our development & team best practices and architecture, please check our [Documentation Folder](../Documentation/).
 
 ## Key Topics
 
