@@ -10,6 +10,13 @@ Welcome to the StockControlApp repository. This project consists of two main com
 - **Contact**: [daniel.carneiro@accruent.com](mailto:daniel.carneiro@accruent.com)
 - **LinkedIn**: [Daniel Carneiro](https://www.linkedin.com/in/danielcarneirotech/)
 
+## Key topics
+- **[Project Overview](#project-overview)**
+- **[Quick Demo](#quick-demo)**
+- **[Introduction](#Introduction)**
+- **[Documentation](#documentation)**
+- **[Demo](#demo)**
+
 ## Project Overview
 
 1. **StockControl API**:The backend service responsible for managing stock data and providing APIs for the frontend to interact with.
@@ -18,7 +25,7 @@ Welcome to the StockControlApp repository. This project consists of two main com
 ## Quick Demo
 ![Gif of the stock control app being used on microsoft edge](./Demo/stock-control-app-demo-gif.gif)
 
-## Getting Started
+## Introduction
 
 ### StockControl API
 
@@ -37,9 +44,12 @@ For more detailed information on how to set up and run the UI, please refer to t
 
 ## Documentation
 
-For more detailed information about the project, including best practices and API documentation, please refer to the `Documentation` folder. This folder contains:
+For more detailed information about the project, including best practices and readme files, please refer to the links below:
 
+- [API README](./StockControl/README.md)
 - [API Best Practices](Documentation/API/BEST_PRACTICES.md)
+
+- [UI README](./StockControl-UI/README.md)
 - [UI Best Practices](Documentation/UI/BEST_PRACTICES.md)
 
 ## Demo

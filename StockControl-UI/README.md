@@ -7,6 +7,7 @@ This is our README.md file with general information about the project. If you wa
 ## Key Topics
 
 - **[Project Overview](#overview)**
+- **[Project Architecture](#project-architecture)**
 - **[Key Features](#key-features)**
 - **[Technologies Used](#technologies-used)**
 - **[Getting Started](#getting-started)**
@@ -17,6 +18,13 @@ This is our README.md file with general information about the project. If you wa
 ## Overview
 
 Fitshop Stock System is a web application designed to manage stock transactions and generate stock reports for fitness products. This project is built using React, TypeScript, and Vite, providing a modern and efficient development environment.
+
+## Project Architecture
+The project follows a component-based architecture with a clear separation of concerns that should be followed by the team. It's not fully implemented, but that's our goal "to be" right now:
+
+Understand it better at [Best Practices](../Documentation/UI/BEST_PRACTICES.md)
+
+![Frontend Architecture](../Documentation/UI/Pictures/frontend-architecture.png)
 
 ## Key Features
 

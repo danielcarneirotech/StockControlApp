@@ -14,27 +14,27 @@ This document outlines the best practices to follow while developing the StockCo
 - [**API Services**](#api-services)
 - [**Contact Information**](#contact-information)
 
-## Project Structure
+## Project Architecture
 
 The project follows a component-based architecture with a clear separation of concerns that should be followed by the team. It's not fully implemented, but that's our goal "to be" right now:
 
 **`src/`**: Main Source Directory
-        * **`components/`**: Reusable UI components.
-        * **`pages/`**: Page-level components (views).
-        * **`hooks/`**: Custom React hooks.
-        * **`services/`**: API and utility services.
-        * **`types/`**: TypeScript type definitions.
-        * **`utils/`**: Shared utility functions and helpers.
-        * **`store/`**: Redux state management (slices, actions, selectors, store configuration).
-        * **`assets/`**: Static assets (images, fonts, SVGs, etc.).
-        * **`styles/`**: Global styles, themes, and CSS modules.
-        * **`contexts/`**: React context providers.
-        * **`routes/`**: Routing configuration and components.
-        * **`mocks/`**: Mock data for development and testing.
-        * **`config/`**: Application configuration files and constants.
-        * **`layouts/`**: Layout components (e.g., for headers, footers, sidebars).
-        * **`forms/`**: Reusable form components and logic.
-        * **`i18n/`**: Internationalization files and configuration.
+- **`components/`**: Reusable UI components.
+- **`pages/`**: Page-level components (views).
+- **`hooks/`**: Custom React hooks.
+- **`services/`**: API and utility services.
+- **`types/`**: TypeScript type definitions.
+- **`utils/`**: Shared utility functions and helpers.
+- **`store/`**: Redux state management (slices, actions, selectors, store configuration).
+- **`assets/`**: Static assets (images, fonts, SVGs, etc.).
+- **`styles/`**: Global styles, themes, and CSS modules.
+- **`contexts/`**: React context providers.
+- **`routes/`**: Routing configuration and components.
+- **`mocks/`**: Mock data for development and testing.
+- **`config/`**: Application configuration files and constants.
+- **`layouts/`**: Layout components (e.g., for headers, footers, sidebars).
+- **`forms/`**: Reusable form components and logic.
+- **`i18n/`**: Internationalization files and configuration.
 - **`public/`**: Static assets.
 - **`tests/`**: Test files (e.g., `App.test.tsx`, `api.test.tsx`).
 - **`coverage/`**: Test coverage reports.
@@ -42,6 +42,8 @@ The project follows a component-based architecture with a clear separation of co
 - **`*.config.*`**: Configuration files (Vite, Jest, ESLint, Prettier).
 - **`README.md`**: Project documentation.
 - **`package.json`**: Project dependencies.
+
+![Frontend Architecture](./Pictures/frontend-architecture.png)
 
 ## Testing
 
@@ -86,10 +88,10 @@ The project follows a component-based architecture with a clear separation of co
         * The slice's reducer as the default export.
         * Selectors to access specific parts of the slice's state.
 
-    ### Async Actions and Thunks
-        For handling asynchronous actions (like API calls), we use Redux Thunks placed within the respective slice files.
-    ### Store Configuration
-        The global Redux store is configured in src/store/store.ts using configureStore from Redux Toolkit. The store combines all slice reducers.
+### Async Actions and Thunks
+For handling asynchronous actions (like API calls), we use Redux Thunks placed within the respective slice files.
+### Store Configuration
+The global Redux store is configured in src/store/store.ts using configureStore from Redux Toolkit. The store combines all slice reducers.
 - **TypeScript:** Leverage TypeScript's type system to improve code reliability and maintainability.
 - **Code Formatting:** Use Prettier to enforce consistent code formatting.
 - **Code Linting:** Use ESLint to enforce code style and catch potential errors.
@@ -123,85 +125,6 @@ The project follows a component-based architecture with a clear separation of co
 - **Base URL:** Store the API base URL in an environment variable.
 - **Data Transformation:** Transform API responses into the required data format.
 
-## Gitflow Best Practices
+## Contact Information
 
-To maintain a clean and organized codebase, we adhere to the following Gitflow best practices:
-
-### Branching Model
-
-* **`main` Branch:** Represents the stable, production-ready code. Only releases are merged into `main`.
-* **`develop` Branch:** Integration branch for features. All feature branches are merged into `develop`.
-* **Feature Branches (e.g., `feature/add-transaction-form`):**
-    * Created from `develop`.
-    * Used for developing new features.
-    * Follow the naming convention: `feature/<feature-name>`.
-* **Bugfix Branches (e.g., `bugfix/fix-login-error`):**
-    * Created from `develop` (or `main` for hotfixes).
-    * Used for fixing bugs.
-    * Follow the naming convention: `bugfix/<bug-description>`.
-* **Release Branches (e.g., `release/v1.2.0`):**
-    * Created from `develop` when a release is ready.
-    * Used for final release preparations (e.g., version bumps, documentation updates).
-    * Follow the naming convention: `release/<version>`.
-* **Hotfix Branches (e.g., `hotfix/fix-critical-bug`):**
-    * Created from `main` to address critical bugs in production.
-    * Merged back into `main` and `develop`.
-    * Follow the naming convention: `hotfix/<bug-description>`.
-
-### Naming Conventions
-
-* **Branch Names:** Use lowercase, separate words with hyphens, and follow the specified branch type prefixes (e.g., `feature/`, `bugfix/`).
-* **Commit Messages:**
-    * Use imperative mood (e.g., "Add transaction form," not "Added transaction form").
-    * Prefix commits with a scope, if applicable (e.g., `feat(transactions): Add transaction form`).
-    * Keep it concise and descriptive.
-* **Pull Requests (PRs):**
-    * Use descriptive titles.
-    * Provide a detailed description of the changes.
-    * Include relevant screenshots or screen recordings.
-    * Link to related issues or tasks.
-
-### Pull Requests (PRs)
-
-* **Review Process:** All code changes must be reviewed by at least one other team member before being merged.
-* **Code Quality:** Ensure code follows our coding standards and best practices.
-* **Testing:** Include relevant unit and integration tests.
-* **CI/CD:** Ensure all automated tests pass before merging.
-
-### Good Commits
-
-* **Atomic Commits:** Each commit should represent a single logical change.
-* **Descriptive Messages:** Write clear and concise commit messages.
-* **Avoid Large Commits:** Break down large changes into smaller, more manageable commits.
-
-## Using AI to Code
-
-AI tools like GitHub Copilot can significantly boost productivity, but it's essential to use them responsibly and with caution to avoid potential risks.
-
-### Data Leaks
-
-* **Avoid Sensitive Data:** Never input sensitive information (e.g., API keys, passwords, personal data) into AI tools.
-* **Review Prompts:** Carefully review the prompts you use to avoid accidentally revealing sensitive data.
-
-### Code Review
-
-* **Always Review AI-Generated Code:** Treat AI-generated code as suggestions, not as definitive solutions.
-* **Understand the Code:** Ensure you fully understand the code generated by AI before incorporating it into your project.
-
-### Organizational Policies
-
-* **Use Only Approved Tools:** Adhere to our organization's policies regarding the use of AI tools. Currently, only GitHub Copilot is approved.
-* **Stay Informed:** Keep up-to-date with our organization's guidelines and best practices for AI usage.
-* **Report Concerns:** If you encounter any potential security or privacy issues related to AI, report them to your team lead (Daniel Carneiro) if they are related to our project and the security team.
-
-### Best Practices
-
-* **Use AI for Repetitive Tasks:** AI is excellent for generating boilerplate code or performing repetitive tasks.
-* **Focus on Logic:** Use AI to assist with syntax and structure, but focus on writing the core business logic yourself.
-* **Iterate and Refine:** Use AI as a starting point and iterate on the generated code to meet your specific requirements.
-
-By following these guidelines, we can leverage the benefits of AI while mitigating potential risks.
-
-Let's make and keep our application more maintainable, scalable, secure and reliable.
-
-For any questions or information, contact our team lead Daniel Carneiro.
+For any questions or information, contact team lead Daniel Carneiro.
