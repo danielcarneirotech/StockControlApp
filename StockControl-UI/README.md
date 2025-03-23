@@ -124,7 +124,7 @@ This project was developed with the assistance of artificial intelligence tools,
 
 * **Human Oversight:** All AI-generated code has been reviewed and modified by me (Daniel Carneiro). The final implementation reflects my understanding and adherence to best practices.
 * **AI as a Tool:** AI was used as a tool to enhance productivity, not as a replacement for human expertise. It was used for: 
-  - Generating boilerplate code
+  - First design idea
   - Providing code suggestions
   - Assisting with documentation
   - Offering insights on best practices

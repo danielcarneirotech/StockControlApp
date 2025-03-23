@@ -1,7 +1,7 @@
 # Fitshop Stock Control App
 
 Hi there! 👋
-Welcome to the StockControlApp repository. This project consists of two main components developed by me, Daniel:
+Welcome to the StockControlApp repository. This project consists of two main components developed by me, Daniel
 
 ## Contact information
 
@@ -14,6 +14,9 @@ Welcome to the StockControlApp repository. This project consists of two main com
 
 1. **StockControl API**:The backend service responsible for managing stock data and providing APIs for the frontend to interact with.
 2. **StockControl UI**: The frontend application that provides a user interface for interacting with the stock data.
+
+## Quick Demo
+![Gif of the stock control app being used on microsoft edge](./Demo/stock-control-app-demo-gif.gif)
 
 ## Getting Started
 
@@ -38,3 +41,6 @@ For more detailed information about the project, including best practices and AP
 
 - [API Best Practices](Documentation/API/BEST_PRACTICES.md)
 - [UI Best Practices](Documentation/UI/BEST_PRACTICES.md)
+
+## Demo
+The project includes a demo video showcasing the main features and functionalities of the StockControl application. You can find the demo video in the [Demo](./Demo/) folder.
