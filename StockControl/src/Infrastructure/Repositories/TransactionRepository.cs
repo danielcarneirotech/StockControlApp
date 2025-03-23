@@ -18,7 +18,5 @@ namespace StockControl.Infrastructure.Repositories
             _context.Transactions.Add(transaction);
             _context.SaveChanges();
         }
-
-        // Implement other methods...
     }
 }

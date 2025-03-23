@@ -21,7 +21,7 @@ namespace StockControl.Api.Tests
         {
             // Arrange
             var client = _factory.CreateClient();
-            var reportDate = DateTime.UtcNow.Date;
+            var reportDate = DateTime.UtcNow.Date.AddDays(-1);
 
             // Act
             var response = await client.GetAsync($"/stockreport?reportDate={reportDate:yyyy-MM-dd}");
@@ -35,7 +35,7 @@ namespace StockControl.Api.Tests
         {
             // Arrange
             var client = _factory.CreateClient();
-            var reportDate = DateTime.UtcNow.Date;
+            var reportDate = DateTime.UtcNow.Date.AddDays(-1);
             var productCode = "WHEY1KG";
 
             // Act

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using StockControl.Application.Constants;
 using StockControl.Application.Queries;
 using StockControl.Domain.Entities;
 using StockControl.Infrastructure.Data;
@@ -27,7 +28,6 @@ namespace StockControl.Api.Tests
 
             using (var context = new StockControlDbContext(options))
             {
-                // Seed data with navigation properties set
                 var whey = new Product { Id = 1, Name = "Whey Protein 1kg", Code = "WHEY1KG" };
                 var creatine = new Product { Id = 2, Name = "Creatine 300g", Code = "CREATINE300G" };
 
@@ -35,19 +35,20 @@ namespace StockControl.Api.Tests
                 context.SaveChanges();
 
                 context.Transactions.AddRange(
-                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date, Quantity = 10 },
-                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date, Quantity = 3 },
-                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date, Quantity = 12 },
-                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date, Quantity = 5 },
-                    new Transaction { Product = creatine, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date, Quantity = 20 },
-                    new Transaction { Product = creatine, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date, Quantity = 5 }
+                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 10 },
+                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 3 },
+                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 12 },
+                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 5 },
+                    new Transaction { Product = creatine, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 20 },
+                    new Transaction { Product = creatine, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 5 }
                 );
 
                 context.SaveChanges();
 
-                var repository = new StockReportRepository(context);
-                var handler = new GetStockReportQueryHandler(repository);
-                var query = new GetStockReportQuery { ReportDate = DateTime.UtcNow.Date, ProductCode = "WHEY1KG" };
+                var stockReportRepository = new StockReportRepository(context);
+                var productRepository = new ProductRepository(context);
+                var handler = new GetStockReportQueryHandler(stockReportRepository, productRepository);
+                var query = new GetStockReportQuery { ReportDate = DateTime.UtcNow.Date.AddDays(-1), ProductCode = "WHEY1KG" };
 
                 var expectedReport = new List<StockReportDTO>
                 {
@@ -88,19 +89,20 @@ namespace StockControl.Api.Tests
                 context.SaveChanges();
 
                 context.Transactions.AddRange(
-                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date, Quantity = 10 },
-                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date, Quantity = 3 },
-                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date, Quantity = 12 },
-                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date, Quantity = 5 },
-                    new Transaction { Product = creatine, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date, Quantity = 20 },
-                    new Transaction { Product = creatine, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date, Quantity = 5 }
+                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 10 },
+                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 3 },
+                    new Transaction { Product = whey, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 12 },
+                    new Transaction { Product = whey, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 5 },
+                    new Transaction { Product = creatine, Type = TransactionType.Checkin, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 20 },
+                    new Transaction { Product = creatine, Type = TransactionType.Checkout, CreatedAt = DateTime.UtcNow.Date.AddDays(-1), Quantity = 5 }
                 );
 
                 context.SaveChanges();
 
-                var repository = new StockReportRepository(context);
-                var handler = new GetStockReportQueryHandler(repository);
-                var query = new GetStockReportQuery { ReportDate = DateTime.UtcNow.Date, ProductCode = "" };
+                var stockReportRepository = new StockReportRepository(context);
+                var productRepository = new ProductRepository(context);
+                var handler = new GetStockReportQueryHandler(stockReportRepository, productRepository);
+                var query = new GetStockReportQuery { ReportDate = DateTime.UtcNow.Date.AddDays(-1), ProductCode = "" };
 
                 var expectedReport = new List<StockReportDTO>
                 {
@@ -141,12 +143,38 @@ namespace StockControl.Api.Tests
 
             using (var context = new StockControlDbContext(options))
             {
-                var repository = new StockReportRepository(context);
-                var handler = new GetStockReportQueryHandler(repository);
+                var stockReportRepository = new StockReportRepository(context);
+                var productRepository = new ProductRepository(context);
+                var handler = new GetStockReportQueryHandler(stockReportRepository, productRepository);
+
                 var query = new GetStockReportQuery { ReportDate = default, ProductCode = "WHEY1KG" };
 
                 // Act & Assert
-                await Assert.ThrowsAsync<ArgumentException>(() => handler.Handle(query, CancellationToken.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => handler.Handle(query, CancellationToken.None));
+            }
+        }
+
+        [Fact]
+        public async Task Handle_ShouldThrowArgumentOutOfRangeException_WhenReportDateIsInFuture()
+        {
+            var databaseName = Guid.NewGuid().ToString();
+            // Arrange
+            var options = new DbContextOptionsBuilder<StockControlDbContext>()
+                .UseInMemoryDatabase(databaseName: databaseName)
+                .Options;
+
+            using (var context = new StockControlDbContext(options))
+            {
+                var stockReportRepository = new StockReportRepository(context);
+                var productRepository = new ProductRepository(context);
+                var handler = new GetStockReportQueryHandler(stockReportRepository, productRepository);
+
+                var query = new GetStockReportQuery { ReportDate = DateTime.Now.AddDays(1), ProductCode = "WHEY1KG" };
+
+                // Act & Assert
+                var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => handler.Handle(query, CancellationToken.None));
+
+                Assert.Equal(nameof(query.ReportDate).ToLower(), exception.ParamName?.ToLower());
             }
         }
 

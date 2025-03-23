@@ -11,7 +11,7 @@ namespace StockControl.Application.Commands
 {
     public class AddTransactionCommand : IRequest<Transaction>
     {
-        public TransactionDTO Transaction { get; set; }
+        public TransactionDTO TransactionDto { get; set; }
 
 
     }

@@ -7,6 +7,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using StockControl.Application.Commands;
 using System.Text.Json.Serialization;
+using StockControl.Api.Middleware;
 
 namespace StockControl.Api;
 
@@ -61,8 +62,10 @@ public partial class Program
 
         app.UseHttpsRedirection();
 
-        // Add CORS middleware here, before routing and endpoints
         app.UseCors("AllowReactApp");
+
+        app.UseMiddleware<ApiResponseMiddleware>();
+
 
         app.UseAuthorization();
 

@@ -20,28 +20,12 @@ namespace StockControl.Application.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse<Transaction>>> Add(TransactionDTO transaction)
+        public async Task<ActionResult<Transaction>> Add(TransactionDTO transactionDto)
         {
-            try
-            {
-                var command = new AddTransactionCommand { Transaction = transaction };
-                var result = await _mediator.Send(command);
-                return CreatedAtAction(nameof(Add), new ApiResponse<Transaction>
-                {
-                    Success = true,
-                    Data = result,
-                    StatusCode = StatusCodes.Status201Created
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse<Transaction>
-                {
-                    Success = false,
-                    Errors = new List<string> { ex.Message },
-                    StatusCode = StatusCodes.Status400BadRequest
-                });
-            }
+            var command = new AddTransactionCommand { TransactionDto = transactionDto };
+            var result = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(Add), result);
         }
     }
 }

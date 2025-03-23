@@ -5,6 +5,7 @@ using FluentAssertions;
 using Moq;
 using StockControl.Application.Commands;
 using StockControl.Application.DTOs;
+using StockControl.Application.Exceptions;
 using StockControl.Domain.Entities;
 using StockControl.Domain.Interfaces;
 using Xunit;
@@ -24,7 +25,7 @@ namespace StockControl.Api.Tests
             var product = new Product { Id = 1, Code = "WHEY1KG", Name = "Whey Protein 1kg", Transactions = new List<Transaction>() };
             mockProductRepository.Setup(repo => repo.GetByCode("WHEY1KG")).ReturnsAsync(product);
 
-            var command = new AddTransactionCommand { Transaction = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 10, Type = TransactionType.Checkin, } };
+            var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 10, Type = TransactionType.Checkin, } };
 
             // Act
             await handler.Handle(command, CancellationToken.None);
@@ -57,7 +58,7 @@ namespace StockControl.Api.Tests
             };
             mockProductRepository.Setup(repo => repo.GetByCode("WHEY1KG")).ReturnsAsync(product);
 
-            var command = new AddTransactionCommand { Transaction = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 5, Type = TransactionType.Checkout } };
+            var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 5, Type = TransactionType.Checkout } };
 
             // Act
             await handler.Handle(command, CancellationToken.None);
@@ -82,10 +83,10 @@ namespace StockControl.Api.Tests
             var product = new Product { Id = 1, Code = "WHEY1KG", Name = "Whey Protein 1kg", Transactions = new List<Transaction>() };
             mockProductRepository.Setup(repo => repo.GetByCode("WHEY1KG")).ReturnsAsync(product);
 
-            var command = new AddTransactionCommand { Transaction = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 5, Type = TransactionType.Checkout } };
+            var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 5, Type = TransactionType.Checkout } };
 
             // Act & Assert
-            await Assert.ThrowsAsync<System.Exception>(() => handler.Handle(command, CancellationToken.None));
+            await Assert.ThrowsAsync<InsufficientStockException>(() => handler.Handle(command, CancellationToken.None));
         }
 
         [Fact]
@@ -98,10 +99,10 @@ namespace StockControl.Api.Tests
 
             mockProductRepository.Setup(repo => repo.GetByCode("INVALID_CODE")).ReturnsAsync((Product)null);
 
-            var command = new AddTransactionCommand { Transaction = new TransactionDTO { ProductCode = "INVALID_CODE", Quantity = 10, Type = TransactionType.Checkin } };
+            var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "INVALID_CODE", Quantity = 10, Type = TransactionType.Checkin } };
 
             // Act & Assert
-            await Assert.ThrowsAsync<System.Exception>(() => handler.Handle(command, CancellationToken.None));
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => handler.Handle(command, CancellationToken.None));
         }
     }
 }
