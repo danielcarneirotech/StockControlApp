@@ -21,12 +21,6 @@ namespace StockControl.Infrastructure.Repositories
 
         public async Task<List<StockReportDTO>> GetStockReport(DateTime reportDate, string productCode)
         {
-            //Ensure it has reportDate
-            if (reportDate == default)
-            {
-                throw new ArgumentException("Report date is required.", nameof(reportDate));
-            }
-
             var query = _context.Transactions
             .Include(t => t.Product)
                 .Where(t => t.CreatedAt.Date <= reportDate.Date);

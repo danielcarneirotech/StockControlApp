@@ -1,6 +1,7 @@
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StockControl.Api.Models;
 using StockControl.Shared.DTOs;
 
 namespace StockControl.Api.Controllers
@@ -19,9 +20,9 @@ namespace StockControl.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<StockReportDTO>>> Get([FromQuery] DateTime reportDate, [FromQuery] string? productCode)
         {
-            var query = new GetStockReportQuery { ReportDate = reportDate, ProductCode = productCode };
-            var report = await _mediator.Send(query);
-            return Ok(report);
+            var query = new GetStockReportQuery { ReportDate = reportDate, ProductCode = productCode ?? string.Empty };
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
     }
 }

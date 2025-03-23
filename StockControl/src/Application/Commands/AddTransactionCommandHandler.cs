@@ -1,5 +1,7 @@
 using MediatR;
 using StockControl.Application.Commands;
+using StockControl.Application.Constants;
+using StockControl.Application.Exceptions;
 using StockControl.Domain.Entities;
 using StockControl.Domain.Interfaces;
 
@@ -16,24 +18,38 @@ public class AddTransactionCommandHandler : IRequestHandler<AddTransactionComman
 
     public async Task<Transaction> Handle(AddTransactionCommand request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetByCode(request.Transaction.ProductCode);
+        var productCode = request.TransactionDto.ProductCode;
+        var transactionType = request.TransactionDto.Type;
+        var quantity = request.TransactionDto.Quantity;
+
+        if (transactionType != TransactionType.Checkin && transactionType != TransactionType.Checkout)
+        {
+            var transactionTypeName = Enum.GetName(typeof(TransactionType), transactionType);
+
+            var transactionTypes = Enum.GetValues(typeof(TransactionType))
+                .Cast<TransactionType>()
+                .Select(t => $"{t}({(int)t})")
+                .ToList();
+
+            var transactionTypesString = string.Join(", ", transactionTypes);
+
+            var exceptionMessage = string.Format(ExceptionMessageConstants.InvalidTransactionType, transactionTypeName, transactionTypesString);
+
+            throw new ArgumentOutOfRangeException(nameof(transactionType), exceptionMessage);
+        }
+
+        var product = await _productRepository.GetByCode(productCode);
 
         if (product == null)
         {
-            throw new Exception($"Product with code {request.Transaction.ProductCode} not found.");
-        }
-
-        // Validate transaction type
-        if (request.Transaction.Type != TransactionType.Checkin && request.Transaction.Type != TransactionType.Checkout)
-        {
-            throw new Exception($"Invalid transaction type {request.Transaction.Type}. Only Checkin and Checkout are allowed.");
+            throw new KeyNotFoundException(string.Format(ExceptionMessageConstants.ProductNotFound, productCode));
         }
 
         var transaction = new Transaction
         {
             Product = product,
-            Type = request.Transaction.Type,
-            Quantity = request.Transaction.Quantity,
+            Type = transactionType,
+            Quantity = quantity,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -47,7 +63,7 @@ public class AddTransactionCommandHandler : IRequestHandler<AddTransactionComman
         {
             if (currentStock - transaction.Quantity < 0)
             {
-                throw new Exception($"Insufficient stock for product {product.Name}. Current stock: {currentStock}, requested: {transaction.Quantity}.");
+                throw new InsufficientStockException(productCode, currentStock, transaction.Quantity);
             }
         }
 
