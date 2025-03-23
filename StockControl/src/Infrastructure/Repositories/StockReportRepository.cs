@@ -40,6 +40,7 @@ namespace StockControl.Infrastructure.Repositories
                     CheckoutQuantity = g.Sum(t => t.Type == TransactionType.Checkout ? t.Quantity : 0),
                     Balance = g.Sum(t => t.Type == TransactionType.Checkin ? t.Quantity : -t.Quantity)
                 })
+                .OrderBy(r => r.ProductName)
                 .ToListAsync();
 
             return report;
