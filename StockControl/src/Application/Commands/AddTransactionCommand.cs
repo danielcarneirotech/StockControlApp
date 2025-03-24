@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using StockControl.Application.DTOs;
 using StockControl.Domain.Entities;
+using StockControl.Shared.DTOs;
 
 namespace StockControl.Application.Commands
 {

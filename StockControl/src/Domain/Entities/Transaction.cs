@@ -15,9 +15,4 @@ namespace StockControl.Domain.Entities
         public int Quantity { get; set; }
     }
 
-    public enum TransactionType
-    {
-        Checkin,
-        Checkout
-    }
 }

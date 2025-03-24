@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StockControl.Domain.Entities;
 
-namespace StockControl.Application.DTOs
+namespace StockControl.Shared.DTOs
 {
     public class TransactionDTO
     {
@@ -19,5 +18,7 @@ namespace StockControl.Application.DTOs
         [Required]
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

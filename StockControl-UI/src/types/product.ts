@@ -3,3 +3,7 @@ export interface Product {
   name: string;
   code: string;
 }
+export interface ProductToAdd {
+  name: string;
+  code: string;
+}
