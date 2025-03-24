@@ -83,7 +83,7 @@ namespace StockControl.Api.Tests
             {
                 // Seed data with navigation properties set
                 var whey = new Product("WHEY1KG", "Whey Protein 1kg");
-                var creatine = new Product("Creatine 300g", "CREATINE300G");
+                var creatine = new Product("CREATINE300G", "Creatine 300g");
 
                 context.Products.AddRange(whey, creatine);
                 context.SaveChanges();
