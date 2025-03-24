@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Home } from './Home';
 
 jest.mock('../../services/api', () => {
@@ -31,10 +31,10 @@ describe('Home page component', () => {
     expect(screen.getByTestId('home-header-title')).toHaveTextContent('Fitshop Stock System');
   });
 
-  it('should have add transaction tab active by default', () => {
+  it('should have products tab active by default', () => {
     render(<Home />);
     expect(screen.getByTestId('nav-container')).toBeInTheDocument();
-    expect(screen.getByTestId('add-transaction-tab')).toHaveClass('active');
+    expect(screen.getByTestId('products-tab')).toHaveClass('active');
     expect(screen.queryByTestId('stock-report-tab')).not.toHaveClass('active');
   });
 
@@ -52,14 +52,28 @@ describe('Home page component', () => {
     expect(screen.queryByTestId('add-transaction-tab')).not.toHaveClass('active');
   });
 
-  it('should render AddTransaction component by default', () => {
+  it('should render Products component by default', () => {
     render(<Home />);
-    expect(screen.getByTestId('add-transaction-tab')).toHaveClass('active');
+    expect(screen.getByTestId('products-tab')).toHaveClass('active');
   });
 
   it('should render StockReport component when Stock Report tab is active', () => {
     render(<Home />);
     fireEvent.click(screen.getByTestId('stock-report-tab'));
     expect(screen.getByTestId('stock-report-tab')).toHaveClass('active');
+  });
+
+  it('should switch to Products tab when clicked', () => {
+    render(<Home />);
+    fireEvent.click(screen.getByTestId('products-tab'));
+    expect(screen.getByTestId('products-tab')).toHaveClass('active');
+    expect(screen.queryByTestId('add-transaction-tab')).not.toHaveClass('active');
+    expect(screen.queryByTestId('stock-report-tab')).not.toHaveClass('active');
+  });
+
+  it('should render Products component when Products tab is active', () => {
+    render(<Home />);
+    fireEvent.click(screen.getByTestId('products-tab'));
+    expect(screen.getByTestId('products-tab')).toHaveClass('active');
   });
 });

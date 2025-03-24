@@ -36,7 +36,7 @@ export function Table<T>({
               </tr>
             ))
           ) : (
-            <tr>
+            <tr data-testid="no-data-row">
               <td colSpan={columns.length}>{noDataMessage}</td>
             </tr>
           )}
