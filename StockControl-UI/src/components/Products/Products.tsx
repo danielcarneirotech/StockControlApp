@@ -141,7 +141,7 @@ function Products() {
             </Button>
           </Form>
           {isGetProductsLoading ? (
-            <LoadingIcon />
+            <LoadingIcon color="#007bff" />
           ) : (
             <Table
               dataTestId="products-table"
