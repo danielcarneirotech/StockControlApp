@@ -7,6 +7,6 @@ namespace StockControl.Domain.Interfaces
 {
     public interface IStockReportRepository
     {
-        Task<List<StockReportDTO>> GetStockReport(DateTime reportDate, string productCode);
+        Task<List<StockReportDTO>> GetStockReport(DateTime reportDateStart, DateTime reportDateEnd, string productCode);
     }
 }

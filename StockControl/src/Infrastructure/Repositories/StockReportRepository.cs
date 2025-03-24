@@ -19,11 +19,11 @@ namespace StockControl.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<StockReportDTO>> GetStockReport(DateTime reportDate, string productCode)
+        public async Task<List<StockReportDTO>> GetStockReport(DateTime reportDateStart, DateTime reportDateEnd, string productCode)
         {
             var query = _context.Transactions
             .Include(t => t.Product)
-                .Where(t => t.CreatedAt.Date <= reportDate.Date);
+                .Where(t => t.CreatedAt.Date >= reportDateStart.Date && t.CreatedAt.Date <= reportDateEnd.Date);
 
             if (!string.IsNullOrEmpty(productCode))
             {
