@@ -9,4 +9,6 @@ public static class ExceptionMessageConstants
     public const string ReportDateFuture = "Report date cannot be in the future.";
     public const string InvalidProductCode = "Product with code '{0}' not found.";
 
+    public const string ProductCodeAlreadyExists = "Product with code '{0}' already exists.";
+
 }

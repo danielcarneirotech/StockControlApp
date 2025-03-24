@@ -28,8 +28,8 @@ namespace StockControl.Api.Tests
 
             using (var context = new StockControlDbContext(options))
             {
-                var whey = new Product { Id = 1, Name = "Whey Protein 1kg", Code = "WHEY1KG" };
-                var creatine = new Product { Id = 2, Name = "Creatine 300g", Code = "CREATINE300G" };
+                var whey = new Product("WHEY1KG", "Whey Protein 1kg");
+                var creatine = new Product("Creatine 300g", "CREATINE300G");
 
                 context.Products.AddRange(whey, creatine);
                 context.SaveChanges();
@@ -82,8 +82,8 @@ namespace StockControl.Api.Tests
             using (var context = new StockControlDbContext(options))
             {
                 // Seed data with navigation properties set
-                var whey = new Product { Id = 1, Name = "Whey Protein 1kg", Code = "WHEY1KG" };
-                var creatine = new Product { Id = 2, Name = "Creatine 300g", Code = "CREATINE300G" };
+                var whey = new Product("WHEY1KG", "Whey Protein 1kg");
+                var creatine = new Product("Creatine 300g", "CREATINE300G");
 
                 context.Products.AddRange(whey, creatine);
                 context.SaveChanges();

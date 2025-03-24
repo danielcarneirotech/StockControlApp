@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using StockControl.Api.Models;
 using StockControl.Application.Commands;
-using StockControl.Application.DTOs;
 using StockControl.Domain.Entities;
 using StockControl.Domain.Interfaces;
+using StockControl.Shared.DTOs;
 
 namespace StockControl.Application.Controllers
 {

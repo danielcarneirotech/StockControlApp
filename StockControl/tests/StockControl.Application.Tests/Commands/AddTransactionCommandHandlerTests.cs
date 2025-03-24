@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using StockControl.Application.Commands;
-using StockControl.Application.DTOs;
 using StockControl.Application.Exceptions;
 using StockControl.Domain.Entities;
 using StockControl.Domain.Interfaces;
+using StockControl.Shared.DTOs;
 using Xunit;
 
 namespace StockControl.Api.Tests
@@ -22,7 +22,7 @@ namespace StockControl.Api.Tests
             var mockTransactionRepository = new Mock<ITransactionRepository>();
             var handler = new AddTransactionCommandHandler(mockTransactionRepository.Object, mockProductRepository.Object);
 
-            var product = new Product { Id = 1, Code = "WHEY1KG", Name = "Whey Protein 1kg", Transactions = new List<Transaction>() };
+            var product = new Product("WHEY1KG", "Whey Protein 1kg");
             mockProductRepository.Setup(repo => repo.GetByCode("WHEY1KG")).ReturnsAsync(product);
 
             var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 10, Type = TransactionType.Checkin, } };
@@ -47,15 +47,13 @@ namespace StockControl.Api.Tests
             var mockTransactionRepository = new Mock<ITransactionRepository>();
             var handler = new AddTransactionCommandHandler(mockTransactionRepository.Object, mockProductRepository.Object);
 
-            var product = new Product
-            {
-                Id = 1,
-                Code = "WHEY1KG",
-                Name = "Whey Protein 1kg",
-                Transactions = new List<Transaction>{
-                new Transaction { Type = TransactionType.Checkin, Quantity = 10, CreatedAt = DateTime.UtcNow.AddDays(-1) },
-            }
-            };
+            var product = new Product(
+                "WHEY1KG",
+                "Whey Protein 1kg",
+                new List<Transaction> { new Transaction { Type = TransactionType.Checkin, Quantity = 10, CreatedAt = DateTime.UtcNow.AddDays(-1) } }
+            );
+
+
             mockProductRepository.Setup(repo => repo.GetByCode("WHEY1KG")).ReturnsAsync(product);
 
             var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 5, Type = TransactionType.Checkout } };
@@ -80,7 +78,7 @@ namespace StockControl.Api.Tests
             var mockTransactionRepository = new Mock<ITransactionRepository>();
             var handler = new AddTransactionCommandHandler(mockTransactionRepository.Object, mockProductRepository.Object);
 
-            var product = new Product { Id = 1, Code = "WHEY1KG", Name = "Whey Protein 1kg", Transactions = new List<Transaction>() };
+            var product = new Product("WHEY1KG", "Whey Protein 1kg");
             mockProductRepository.Setup(repo => repo.GetByCode("WHEY1KG")).ReturnsAsync(product);
 
             var command = new AddTransactionCommand { TransactionDto = new TransactionDTO { ProductCode = "WHEY1KG", Quantity = 5, Type = TransactionType.Checkout } };
