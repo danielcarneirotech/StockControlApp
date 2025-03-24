@@ -85,7 +85,7 @@ export function AddTransaction() {
       <Card dataTestId="add-transaction-card-container">
         <Card.Header>
           <h1>Add Transaction</h1>
-          <p>View stock levels for products on a specific date</p>
+          <p>Add a new stock check-in or check-out transaction</p>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleOnSubmit}>
